@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>命令行界面</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  </head>
+  <body>
+    <input id="command" type="text" />
+    <button onclick="sendCommand()">执行</button>
+    <pre id="output"></pre>
+
+    <script>
+      var socket = io();
+
+      function sendCommand() {
+        var command = document.getElementById("command").value;
+        socket.emit("execute_command", command);
+      }
+
+      socket.on("command_output", function (data) {
+        document.getElementById("output").textContent += data + "\n";
+      });
+    </script>
+  </body>
+</html>
